@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
@@ -16,15 +17,17 @@ function App() {
   const [mresult, setMresult] = useState('--')
   const [dresult, setDresult] = useState('--')
   const [daysOfMonth, setDaysOfMonths] = useState(null)
+
   const handleSubmit = async e => {
     e.preventDefault()
     try{
       if(!day){
         setDayError('This field is required')
       }
-      else if(day.length >= 3){
+      else if(day.length >= 3 || day >= 32){
        setDayError('Must be a valid day')
-      }else{
+      }
+      else{
        setDayError(null)
       }
 
@@ -70,11 +73,27 @@ function App() {
       if(!year){
         setYearError('This field is required')
       }
-      else if(year > nowYear){
-        setYearError('Must be in the past')
-      }
       else{
         setYearError(null)
+      }
+
+      if(year >= nowYear){
+        if(year > nowYear){
+          setDayError('Must be a valid date')
+        }
+        else{
+          if(month >= nowMonth){
+            if(month > nowMonth){
+              setDayError('Must be a valid date')
+            }else{
+              if(day > nowDay){
+                setDayError('Must be a valid date')
+              }else if(!dayError){
+                setDayError(null)
+              }
+            }
+          }
+        }
       }
 
     }catch(err){
@@ -109,47 +128,96 @@ function App() {
       setMresult('--')
       setYresult('--')
     }
-
+  }
+  let error = false;
+  if(dayError || monthError || yearError){
+    error = true;
+  }else{
+    error = false;
   }
   return (
     <div className="App">
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <label className='label day'>
-            <span>DAY</span>
-            <input type="number" maxLength="2"
-              onChange={e => setDay(e.target.value)}
-              placeholder='DD'
-              value={day}
-            />
-            {dayError && 
-              <span className="error">{dayError}</span>
-            }
-          </label>
-          <label className='label month'>
-            <span>MONTH</span>
-            <input type="number" maxLength="2"
-              onChange={e => setMonth(e.target.value)}
-              value={month}
-              placeholder='MM'
-            />
-            {monthError && 
-              <span className="error">{monthError}</span>
-            }
-          </label>
-          <label className='label year'>
-            <span>YEAR</span>
-            <input type="number" maxLength="4"
-              onChange={e => setYear(e.target.value)}
-              value={year}
-              placeholder='YYYY'
-            />
-            {yearError && 
-              <span className="error">{yearError}</span>
-            }            
-          </label>
+          <div id="inputs">
+            <label className='label day'>
+              {!error && 
+                <React.Fragment>
+                  <span className='date'>DAY</span>
+                  <input type="number" maxLength="2"
+                    onChange={e => setDay(e.target.value)}
+                    placeholder='DD'
+                    value={day}
+                  />
+                </React.Fragment>
+              }
+              {error&& 
+                <React.Fragment>
+                  <span className='errorSpan'>DAY</span>
+                  <input className='errorInput' type="number" maxLength="2"
+                    onChange={e => setDay(e.target.value)}
+                    placeholder='DD'
+                    value={day}
+                  />
+                </React.Fragment>
+              }
+              {dayError && 
+                <span className="errorText">{dayError}</span>
+              }
+            </label>
+            <label className='label month'>
+              {!error && 
+                <React.Fragment>
+                  <span className='date'>MONTH</span>
+                  <input type="number" maxLength="2" 
+                    onChange={e => setMonth(e.target.value)}
+                    value={month}
+                    placeholder='MM'
+                  />
+                </React.Fragment>
+              }
+              {error && 
+                <React.Fragment>
+                  <span className='errorSpan'>MONTH</span>
+                  <input className='errorInput' type="number" maxLength="2" 
+                    onChange={e => setMonth(e.target.value)}
+                    value={month}
+                    placeholder='MM'
+                  />
+                </React.Fragment>
+              }
+              {monthError && 
+                <span className="errorText">{monthError}</span>
+              }
+            </label>
+            <label className='label year'>
+              {!error && 
+                <React.Fragment>
+                  <span className='date'>YEAR</span>
+                  <input type="number" maxLength='4'
+                    onChange={e => setYear(e.target.value)}
+                    value={year}
+                    placeholder='YYYY'
+                  />
+                </React.Fragment>
+              }
+              {error && 
+                <React.Fragment>
+                  <span className='errorSpan'>YEAR</span>
+                  <input className='errorInput' type="number" maxLength="4" 
+                    onChange={e => setYear(e.target.value)}
+                    value={year}
+                    placeholder='YYYY'
+                  />
+                </React.Fragment>
+              }
+               {yearError && 
+                <span className='errorText'>{yearError}</span>
+               }     
+            </label>
+          </div>
           <div className="submit">
-            <hr />
+            <span></span>
             <button><i className="material-icons">check</i></button>
           </div>
         </form>

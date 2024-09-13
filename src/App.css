@@ -1,0 +1,188 @@
+@font-face {
+    font-family: Poppins-Bold;
+    src: url(./assets/fonts/Poppins-Bold.ttf);
+}
+
+@font-face {
+    font-family: Poppins-ExtraBold;
+    src: url(./assets/fonts/Poppins-ExtraBold.ttf);
+}
+
+@font-face {
+    font-family: Poppins-ExtraBoldItalic;
+    src: url(./assets/fonts/Poppins-ExtraBoldItalic.ttf);
+}
+
+@font-face {
+    font-family: Poppins-Italic;
+    src: url(./assets/fonts/Poppins-Italic.ttf);
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+html, body, .App, #root{
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.App{
+    display: flex;
+    place-content: center;
+    place-items: center;
+    background-color: hsl(0, 0%, 94%);
+}
+
+.container{
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    width: 550px;
+    height: 500px;
+    padding: 35px;
+    border-radius: 13px;
+    border-bottom-right-radius: 160px;
+}
+
+#inputs{
+    display: flex;
+    flex-direction : row;
+    width: 100%;
+}
+
+.label{
+    display: flex;
+    flex-direction : column;
+    width: 25%;
+}
+
+.day, .month{
+    margin-right: 23px;
+}
+
+.label .date{
+    font-family: Poppins-Bold;
+    color: hsl(0, 1%, 44%);
+    margin-bottom: 5px;
+}
+
+.errorSpan{
+    color: hsl(0, 100%, 67%);
+    font-family: Poppins-Bold;
+    margin-bottom: 5px;
+}
+
+input, .errorInput{
+    width: 100%; 
+    font-family:Poppins-ExtraBold;
+    font-size: 25px;
+    color: hsl(0, 0%, 8%);
+    border-radius: 6px;
+    border: 1px solid hsl(0, 0%, 86%);
+    padding: 8px;
+}
+
+.errorInput{
+    border: 1px solid hsl(0, 82%, 62%);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.errorText{
+    color : hsl(0, 100%, 67%);
+    font-family : Poppins-Italic;
+    font-size : 12px;
+}
+
+.submit{
+    display: flex;
+    align-items: center;
+}
+
+.submit span{
+    background-color: hsl(0, 0%, 86%);
+    width: 100%;
+    height: 2px;
+}
+
+.submit button{
+    background-color : hsl(259, 100%, 65%);
+    padding: 12px;
+    border: none;
+    border-radius: 100%;
+}
+
+.submit button:hover{
+    cursor: pointer;
+    background-color: hsl(0, 0%, 8%);
+}
+
+.submit button:active{
+    background-color : hsl(259, 39%, 52%);
+}
+
+.submit button i{
+    font-size: 45px;
+    color: white;
+}
+
+.results{
+    display: flex;
+    flex-direction: column;
+}
+
+.dash, .name{
+    font-family: Poppins-ExtraBoldItalic;
+    font-size: 65px;
+}
+
+.dash{
+    color: hsl(259, 100%, 65%);
+}
+
+/* 
+==========
+View Ports
+==========
+*/
+
+@media screen and (max-width : 635px){
+    .container{
+        width: 90%;
+        margin-bottom: 60px;
+        height: 520px;
+    }
+    .day, .month{
+        margin-right: 20px;
+    }
+    .label{
+        width: max-content;
+    }
+    #inputs{
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    .name, .dash{
+        font-size: 58px;
+    }
+    .errorText{
+        font-size: 2vw;
+    }
+    .submit{
+        position: relative;
+        justify-content: center;
+        margin: 50px 0px;
+    }
+    .submit button{
+        position: absolute;
+    }
+
+}
